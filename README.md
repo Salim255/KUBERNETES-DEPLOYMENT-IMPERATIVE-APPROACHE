@@ -41,3 +41,11 @@
 ### To reach a pod and a container running in a pod we need a service, and Service object is an other object that Kubernetes need in order to expose the pods to other pods in the cluster or to visitors outside of the cluster.
 
 ### Point to a pod with it's IP address it's not the right wolution, because the IP of pod changes, with every new pod, so Service group the pods and gave them a shared IP address, then we can access the pods througth that IP address and also we can share that IP address to allow external access to Pods from outside of the cluster, by default it's access internal onley , but with service we can overide this, so without service pods is very hard to reach even internally, because of that IP address changing all the time, and from outside the cluster the pods are not reachable at all without this Serivce object
+
+### Setup Service object: $kubectl expose deployment first-app --type=LoadBalancer --port=8080
+
+### So the LoadBalancer will generate a unique address for this service, also distibute all incoming traffic accross all Pods which are part of this service
+
+### To check if service was created: $kubectl get service
+
+### To get the external address in case minikube run: $ minikube service first-app
