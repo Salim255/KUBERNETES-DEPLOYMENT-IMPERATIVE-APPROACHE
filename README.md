@@ -1,6 +1,6 @@
 # KUBERNETES-DEPLOYMENT-IMPERATIVE-APPROACHE
 
-# Steps:
+# Steps for minukube cluster:
 
 ## 1: Build the docker image
 
@@ -25,3 +25,13 @@
 #### We use kubectl to create adeployment object, then it will be automatically send to the cluster: $ kubectl create deployment first-app --image=crawan/kub-first-app
 
 #### We run kubectl dashboard in order to see the schema of or cluster in browser we run: $kuberctl dashboard
+
+## Master node(Control Plane):
+
+### Is responsible for creating all the things we need in our cluster and for example distributing the pods across worker node, by analyzes currently running Pods and finds the best Node for the new Pod(s)
+
+## Worker node:
+
+### Has what we called kubelet to manages the Pod and Containers and check it's health
+
+## Pod: containe a container based in the image specified when we create the deployment object
