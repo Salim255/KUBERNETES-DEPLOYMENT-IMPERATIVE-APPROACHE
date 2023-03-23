@@ -24,7 +24,7 @@
 
 #### We use kubectl to create adeployment object, then it will be automatically send to the cluster: $ kubectl create deployment first-app --image=crawan/kub-first-app
 
-#### We run kubectl dashboard in order to see the schema of or cluster in browser we run: $kuberctl dashboard
+#### We (run kubectl dashboard) in order to see the schema of or cluster in browser we run: $minikube dashboard
 
 ## Master node(Control Plane):
 
@@ -42,10 +42,38 @@
 
 ### Point to a pod with it's IP address it's not the right wolution, because the IP of pod changes, with every new pod, so Service group the pods and gave them a shared IP address, then we can access the pods througth that IP address and also we can share that IP address to allow external access to Pods from outside of the cluster, by default it's access internal onley , but with service we can overide this, so without service pods is very hard to reach even internally, because of that IP address changing all the time, and from outside the cluster the pods are not reachable at all without this Serivce object
 
-### Setup Service object: $kubectl expose deployment first-app --type=LoadBalancer --port=8080
+### Setup Service object: $kubectl expose deployment first-app --type=LoadBalancer --port=8080(the default type is ClusterIP, which means it's onley be available from inside the cluster, or NodePort, which means this deployment should be exposed with the help of an ip address of a Worker node on which it's running)
 
 ### So the LoadBalancer will generate a unique address for this service, also distibute all incoming traffic accross all Pods which are part of this service
 
 ### To check if service was created: $kubectl get service
 
-### To get the external address in case minikube run: $ minikube service first-app
+### To get the external address in case minikube or te see the running service run: $ minikube service first-app
+
+# Scaling in action run: kubectl scale deployment/first-app --replicas=3
+
+# Update a deployment
+
+## 1\ Applay the modification to your soucre code
+
+## 2\ Re build your image: $ docker build -t crawan/kub-first-app .
+
+## 3\ Push the updated image to docker hub: $ docker push crawan/kub-first-app
+
+## 4\ About the deployment: $ kubectl set image deployment/first-app kub-first-app(nam of the container)=crawan/kub-first-app
+
+# 🔥🔥 New image will not be used after the updating steps if we use the same image's name in the current container, so in order to allow the container to use the new version of the image that have the same name, we must add a tag to the built image ( docker build -t crawan/kub-first-app: 2 . ;docker push crawan/kub-first-app:2 ; kubectl set image deployment/first-app kub-first-app=crawan/kub-first-app:2 )
+
+# To apply the curent updating status : kubectl rollout status deployment/first-app
+
+# 🔥 Kubernetes protect your running application, so we try to update the image of the running container with an image that doesnt exist, kubernetes will always try first to create a new pod, in ordrer to confirm that the image is correct and work just fine, once this step, verified, kubernetes delete the old pods and replace them with news pods with the updated image else we need to make rollback to step this step(pulling wrong image)by running: $ kubectl rollout undo deployment/first-app
+
+# To go back to older deployment:
+
+## 1\ Look at the deployment history by run: $kubectl rollout history deployment/first-app; So we get a list revision with there id, from where can review the exact revision by running :$kubectl rollout history deployment/first-app --revision=revision-number; where we can see which image was used in that revision
+
+# 2\ The the command to rollback to exat revision running: $ kubectl rollout undo deployment/first-app --to-revision=revisionnumber
+
+# Deleting a service by running: $kubectl delete service first-app
+
+# Delete deployment: $kubectl delete deployment first-app
