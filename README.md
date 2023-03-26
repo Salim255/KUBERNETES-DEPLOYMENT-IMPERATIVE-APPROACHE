@@ -77,3 +77,13 @@
 # Deleting a service by running: $kubectl delete service first-app
 
 # Delete deployment: $kubectl delete deployment first-app
+
+# Declarative approach
+
+## 1\ Create deployment.ymal
+
+## 2\ run: kubectl apply -f=deployment.yml ; to apply configureted file to connected cluster
+
+## 3\ run: kubectl get deployment ; to see the result up and running
+
+## 4\ In this step we cant visit the app, be cause the service is missing, so w'll add services in step 5

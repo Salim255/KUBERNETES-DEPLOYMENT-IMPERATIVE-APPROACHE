@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+# Set the api version to app/v1 for deployment that I want to create
+kind: Deployment
+# To tell kubernetes about the kubernetes object type we want to create(like service, deployment, job, ...)
+metadata:
+  #metadat, to hold the name of the object that we are creating
+  name: second-app-deployment
+spec:
+  #The specification of the created object
+  replicas: 1
+  #Means the number of pods that we want to have, else there will be one pod by default
+  selector:
+    # To define which pod should be controlled by this object
+    matchLabels:
+      app: second-app
+      # By this we are sying all the pods with label name of app with the value  second-app, should be controlled by deployment
+      #All other pods dont have the label mentioned herer will by controlled by deployment
+  template:
+    #To declare the pod that should be created as part of this deployment
+    metadata:
+      labels:
+        app: second-app
+        #app could be any text
+    spec:
+      #The specification of how this pod should be configured
+      containers:
+        #To add containers
+        - name: second-node
+          image: crawan/kub-first-app:2
