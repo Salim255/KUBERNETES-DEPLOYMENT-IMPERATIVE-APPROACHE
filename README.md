@@ -82,8 +82,18 @@
 
 ## 1\ Create deployment.ymal
 
-## 2\ run: kubectl apply -f=deployment.yml ; to apply configureted file to connected cluster
+## 2\ run: kubectl apply -f deployment.yml ; to apply configureted file to connected cluster
 
 ## 3\ run: kubectl get deployment ; to see the result up and running
 
 ## 4\ In this step we cant visit the app, be cause the service is missing, so w'll add services in step 5
+
+## 5\ Create service.yml file
+
+## 6\ Run the command to create the service: kubectl apply -f service.yaml
+
+## 7\To see the service, run: $kubectl get service
+
+## 8\To expose the service, run: $ minikube service backend(service name), and this will open up a new browser tab , where you can see your running application
+
+# The declartive appraoch it's the appraoch we gonna use

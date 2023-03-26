@@ -13,6 +13,7 @@ spec:
     # To define which pod should be controlled by this object
     matchLabels:
       app: second-app
+      tier: backend
       # By this we are sying all the pods with label name of app with the value  second-app, should be controlled by deployment
       #All other pods dont have the label mentioned herer will by controlled by deployment
   template:
@@ -20,6 +21,7 @@ spec:
     metadata:
       labels:
         app: second-app
+        tier: backend
         #app could be any text
     spec:
       #The specification of how this pod should be configured

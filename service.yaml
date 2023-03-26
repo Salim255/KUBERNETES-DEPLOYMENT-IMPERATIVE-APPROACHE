@@ -1,0 +1,26 @@
+apiVersion: v1
+# Set the api version to v1 for service that I want to create
+kind: Service
+metadata:
+  name: backend
+spec:
+  selector:
+    # Selector identifie which other resources should connected or controlled by this resource
+    # Serice expose pods to the cluster or out side world, so we service, we dont control deployment but pods
+    app: second-app
+
+    # Here I am saying this service should control all pods with the label name of app tier that have values of second-app ,
+    # And this mean the pods generated in deployment with label app, should be exposed by this service
+  #Determine in which port this pods should be expose
+  #Then here we can determine a list of por one or more...
+  ports:
+    #always define the protocol used, be default TCP
+    - protocol: "TCP"
+      #The port I wanna exposed on, here we see 80, out side world port, on which this container(pod) should expode
+      port: 80
+      #And the target port inside the container, in my case 8080, thats the port my server listen on
+      targetPort: 8080
+  type: LoadBalancer
+  #ClusterIP which is by default, which is external expose IP, so only accessable from inside the cluster
+  #NodePort expose on the IP and port of the worker node in which its runs
+  #LoadBalancer, the most commonly used, at least I want outside the world access
