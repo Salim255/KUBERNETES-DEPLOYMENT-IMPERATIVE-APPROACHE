@@ -14,8 +14,11 @@ spec:
     matchLabels:
       app: second-app
       tier: backend
-      # By this we are sying all the pods with label name of app with the value  second-app, should be controlled by deployment
-      #All other pods dont have the label mentioned herer will by controlled by deployment
+    # By this we are sying all the pods with label name of app with the value  second-app, should be controlled by deployment
+    #All other pods dont have the label mentioned herer will by controlled by deployment
+    #matchExpressions:
+    # - { key: app, operator: In, values: [second-app, first-app] }
+    #With "In", we want to select all the pods with the label app, with the value in the range [second-app, first-app]
   template:
     #To declare the pod that should be created as part of this deployment
     metadata:
@@ -29,3 +32,12 @@ spec:
         #To add containers
         - name: second-node
           image: crawan/kub-first-app:2
+
+          livenessProbe:
+            #To check the helth of a container if it's up and running
+            httpGet:
+              #Http should be send by a kubernetes to the running application
+              path: /
+              port: 8080
+            periodSecond: 10
+            initialDelaySeconds: 5
