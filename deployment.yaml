@@ -32,7 +32,7 @@ spec:
         #To add containers
         - name: second-node
           image: crawan/kub-first-app:2
-
+          imagePullPolicy: Always
           livenessProbe:
             #To check the helth of a container if it's up and running
             httpGet:
