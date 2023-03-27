@@ -82,7 +82,7 @@
 
 ## 1\ Create deployment.ymal
 
-## 2\ run: kubectl apply -f deployment.yml ; to apply configureted file to connected cluster
+## 2\ run: kubectl apply -f=deployment.yml ; to apply configureted file to connected cluster
 
 ## 3\ run: kubectl get deployment ; to see the result up and running
 
@@ -97,3 +97,5 @@
 ## 8\To expose the service, run: $ minikube service backend(service name), and this will open up a new browser tab , where you can see your running application
 
 # The declartive appraoch it's the appraoch we gonna use
+
+# To delete resource run: $ kubectl delete -f=deployment.yaml -f=service.yaml
